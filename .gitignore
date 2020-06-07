@@ -1,52 +1,158 @@
-# Prerequisites
-*.d
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+float score = 0;
+int answers[100] = { 0 }, user_answer[100] = { 0 };
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+int panduan()
+{
+	printf("                                                          请输入题目个数(1~100)\n");
+	int k;
+	scanf_s("%d", &k);
+	if (k < 1 || k>100)
+	{
+		printf("范围错误\n");
+		exit(0);
+	}
+	else  return k;
+}
 
-# Linker output
-*.ilk
-*.map
-*.exp
+int* jiafa(int i, int a, int b)
+{
+	int* r, * j;
 
-# Precompiled Headers
-*.gch
-*.pch
+	printf("\n第%d题：%d+%d=", i + 1, a, b);
+	scanf_s("%d", &user_answer[i]);
+	j = &user_answer[i];
+	answers[i] = a + b;
+	r = &answers[i];
+	return r, j;
+}
+int* jianfa(int i, int a, int b)
+{
+	int* r, * j;
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+	if (a > b)
+	{
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+		printf("\n第%d题：%d-%d=", i + 1, a, b);
+		scanf_s("%d", &user_answer[i]);
+		j = &user_answer[i];
+		answers[i] = a - b;
+		r = &answers[i];
+		return r, j;
+	}
+	else
+	{
+		printf("\n第%d题：%d-%d=", i + 1, b, a);
+		scanf_s("%d", &user_answer[i]);
+		j = &user_answer[i];
+	}
+	answers[i] = b - a;
+	r = &answers[i];
+	return r, j;
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+}
+int* chengfa(int i, int a, int b)
+{
+	int* r, * j;
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+	printf("\n第%d题：%d*%d=", i + 1, a, b);
+	scanf_s("%d", &user_answer[i]);
+	j = &user_answer[i];
+	answers[i] = a * b;
+	r = &answers[i];
+	return r, j;
+}
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+int* chufa(int i, int a, int b)
+{
+	int* r, * j;
+
+	if (a != 0 && b != 0)
+	{
+		int s = a * b;
+		printf("\n第%d题：%d/%d=", i + 1, s, a);
+		scanf_s("%d", &user_answer[i]);
+		j = &user_answer[i];
+		answers[i] = s / a;
+		r = &answers[i];
+		return r, j;
+	}
+	else
+	{
+		do
+			a = rand() % 100;
+		while (a != 0 && b != 0);
+		{
+			b = rand() % 100;
+			int s = a * b;
+			printf("\n第%d题：%d-%d=", i + 1, s, a);
+			scanf_s("%d", &user_answer[i]);
+			j = &user_answer[i];
+			answers[i] = s / a;
+			r = &answers[i];
+			return r, j;
+		}
+	}
+}
+int main()
+
+{
+	system("color a");
+	int k, m, i, s, j;
+
+
+	printf("                                           ********好好学习，天天向上****************\n");
+	printf("                                                             学习学生：米可馨\n");
+	k = panduan();
+	printf("                                                请选择出题方式：1.加法  2.减法  3.乘法  4.除法  \n");
+	scanf_s("%d", &m);
+	printf("                                                             答题开始！！！\n");
+	for (i = 0; i < k; i++)
+	{
+		srand((unsigned)time(NULL));
+		int a = rand() % 100;
+		int b = rand() % 100;
+		if (m == 1)
+		{
+			answers[i], user_answer[i] = *jiafa(i, a, b);
+
+		}
+		if (m == 2)
+		{
+			answers[i], user_answer[i] = *jianfa(i, a, b);
+		}
+		if (m == 3)
+		{
+			answers[i], user_answer[i] = *chengfa(i, a, b);
+		}
+		if (m == 4)
+		{
+			answers[i], user_answer[i] = *chufa(i, a, b);
+		}
+
+	}
+	printf("结果和正确答案\n");
+	for (i = 0; i < k; i++)
+	{
+		if (user_answer[i] == answers[i])
+		{
+			printf("%d:正确%d\n", i + 1, answers[i]);
+			score++;
+		}
+		else
+			printf("%d:错误%d\n", i + 1, answers[i]);
+	}
+	score = 100 * score / k;
+	printf("\n总得分:%f\n", score);
+
+
+	printf("                       业精于勤荒于嬉,行成于思毁于随\n");
+
+
+
+	printf("登高而招，臂非加长也，而见者远；顺风而呼，声非加疾也，而闻者彰。学海无涯，继续努力不要骄傲\n");
+
+	printf("***********************************************************************************************\n");
+}
